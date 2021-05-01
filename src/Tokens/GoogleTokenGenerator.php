@@ -2,34 +2,15 @@
 
 namespace Olive_James_Bond\GoogleTranslate\Tokens;
 
-/**
- * Google Token Generator.
- *
- * Thanks to @helen5106 and @tehmaestro and few other cool guys
- * at https://github.com/Olive_James_Bond/google-translate-php/issues/32
- */
 class GoogleTokenGenerator implements TokenProviderInterface
 {
-    /**
-     * Generate and return a token.
-     *
-     * @param string $source Source language
-     * @param string $target Target language
-     * @param string $text Text to translate
-     * @return string Token
-     */
+
     public function generateToken(string $source, string $target, string $text): string
     {
         return $this->TL($text);
     }
 
-    /**
-     * Generate a valid Google Translate request token.
-     *
-     * @param string $a text to translate
-     *
-     * @return string
-     */
+
     private function TL($a)
     {
         $tkk = $this->TKK();
@@ -70,23 +51,12 @@ class GoogleTokenGenerator implements TokenProviderInterface
         return $a.'.'.($a ^ $b);
     }
 
-    /**
-     * @return array
-     */
+
     private function TKK()
     {
         return ['406398', (561666268 + 1526272306)];
     }
 
-    /**
-     * Process token data by applying multiple operations.
-     * (Params are safe, no need for multibyte functions)
-     *
-     * @param int $a
-     * @param string $b
-     *
-     * @return int
-     */
     private function RL($a, $b)
     {
         for ($c = 0; $c < strlen($b) - 2; $c += 3) {
@@ -99,16 +69,6 @@ class GoogleTokenGenerator implements TokenProviderInterface
         return $a;
     }
 
-    /**
-     * Unsigned right shift implementation
-     * https://msdn.microsoft.com/en-us/library/342xfs5s(v=vs.94).aspx
-     * http://stackoverflow.com/a/43359819/2953830
-     *
-     * @param $a
-     * @param $b
-     *
-     * @return number
-     */
     private function unsignedRightShift($a, $b)
     {
         if ($b >= 32 || $b < -32) {
@@ -136,27 +96,12 @@ class GoogleTokenGenerator implements TokenProviderInterface
         return $a;
     }
 
-    /**
-     * Get JS charCodeAt equivalent result with UTF-16 encoding
-     *
-     * @param string $str
-     * @param int    $index
-     *
-     * @return number
-     */
     private function JS_charCodeAt($str, $index)
     {
         $utf16 = mb_convert_encoding($str, 'UTF-16LE', 'UTF-8');
         return ord($utf16[$index*2]) + (ord($utf16[$index*2+1]) << 8);
     }
 
-    /**
-     * Get JS equivalent string length with UTF-16 encoding
-     *
-     * @param string $str
-     *
-     * @return number
-     */
     private function JS_length($str)
     {
         $utf16 = mb_convert_encoding($str, 'UTF-16LE', 'UTF-8');
